@@ -1,0 +1,13 @@
+/Library
+/Temp
+/CraftKills_Data
+/Assets/Standard Assets/Water (Pro Only)
+/Assets/Standard Assets/Particles
+/Assets/Standard Assets/Glass Refraction (Pro Only)
+/Assets/Editor
+*.csproj
+*.pidb
+*.unityproj
+*.sln
+*.userprefs
+*.exe
