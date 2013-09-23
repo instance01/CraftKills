@@ -95,14 +95,20 @@ function spawnPlayer(){
 	//GameObject.Find("player(Clone)").transform.Find("Main Camera").gameObject.camera.enabled = false;
 }
 
+var server:String = "";
 function OnGUI(){
 	if(!Network.isClient && !Network.isServer){
-		if(GUI.Button(Rect(55, 100, 180, 40), "Start Server")) {
+		GUI.Label(Rect(55, 50, 120, 30), "Multiplayer: ");
+		GUI.Label(Rect(330, 100, 120, 30), "or");
+		if(GUI.Button(Rect(350, 100, 120, 30), "Start Server")) {
 		    startServer();
 	    }
+		
+		server = GUI.TextField (Rect (55, 105, 140, 20), server, 25);
 	
-	    if(GUI.Button(Rect(55, 150, 180, 40), "Connect")) {
-	    	Network.Connect("127.0.0.1", 25565);
+	    if(GUI.Button(Rect(200, 100, 120, 30), "Connect to Server")) {
+	    	Debug.Log("Connecting to " + server);
+	    	Network.Connect(server, 25565);
 	    }
 	}
 }

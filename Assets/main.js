@@ -6,6 +6,8 @@ var pclass : player;
 var score_ = 0;
 var blocks = 0;
 
+var weapon:String = "default";
+
 function Awake(){
 	if (!networkView.isMine)
         enabled = false;
@@ -116,6 +118,16 @@ function Update () {
 			var hit : RaycastHit;
 			if (Physics.Raycast (ray, hit, 100)) {
 			    Debug.DrawLine (ray.origin, hit.point);
+			    
+			    
+			    if(weapon == "laser"){
+				    var lineRenderer : LineRenderer = GameObject.Find("line").GetComponent(LineRenderer);
+				    lineRenderer.useWorldSpace = false;
+				    lineRenderer.SetVertexCount(2);
+	
+				    lineRenderer.SetPosition(1,Vector3(0,0,hit.distance));
+			    }
+			    
 			    
 			    var cube:GameObject = Network.Instantiate(Resources.Load("Cube"), hit.point, Quaternion.identity, 0);
 			    
