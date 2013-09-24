@@ -99,16 +99,21 @@ var server:String = "";
 function OnGUI(){
 	if(!Network.isClient && !Network.isServer){
 		GUI.Label(Rect(55, 50, 120, 30), "Multiplayer: ");
-		GUI.Label(Rect(330, 100, 120, 30), "or");
-		if(GUI.Button(Rect(350, 100, 120, 30), "Start Server")) {
+		GUI.Label(Rect(330, 70, 120, 30), "or");
+		if(GUI.Button(Rect(350, 70, 120, 30), "Start Server")) {
 		    startServer();
 	    }
 		
-		server = GUI.TextField (Rect (55, 105, 140, 20), server, 25);
+		server = GUI.TextField (Rect (55, 75, 140, 20), server, 25);
 	
-	    if(GUI.Button(Rect(200, 100, 120, 30), "Connect to Server")) {
+	    if(GUI.Button(Rect(200, 70, 120, 30), "Connect to Server")) {
 	    	Debug.Log("Connecting to " + server);
 	    	Network.Connect(server, 25565);
+	    }
+	    
+	    GUI.Label(Rect(55, 120, 120, 30), "Singleplayer: ");
+	    if(GUI.Button(Rect(55, 140, 120, 30), "Play Singleplayer")) {
+		    startServer();
 	    }
 	}
 }

@@ -238,7 +238,7 @@ function score() {
     GUI.Label(Rect(10, 10, 300, 200), "Score: " + score_, myStyle);
     GUI.Label(Rect(10, 50, 300, 200), "Blocks: " + blocks, myStyle);
     if(Network.isClient){
-    	GUI.Label(Rect(10, 100, 300, 200), "Connected", myStyle);
+    	GUI.Label(Rect(10, 70, 300, 200), "Connected");
     }
 
     GUI.EndGroup(); 
@@ -246,7 +246,6 @@ function score() {
 
 function OnGUI () {
     GUI.skin = newSkin;
-    //score();
     if(showpause){
     	pause();
     }else{

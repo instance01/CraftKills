@@ -19,7 +19,7 @@ var newSkin : GUISkin;
 var logoTexture : Texture2D;
 var impact : Font;
 
-function theFirstMenu() {
+function Menu() {
 	var myStyle : GUIStyle = new GUIStyle();
     myStyle.font = impact;
     myStyle.fontSize = 40;
@@ -44,5 +44,5 @@ function theFirstMenu() {
 
 function OnGUI () {
     GUI.skin = newSkin;
-    theFirstMenu();
+    Menu();
 }
