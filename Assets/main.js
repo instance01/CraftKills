@@ -39,6 +39,7 @@ function Awake(){
 
 function Start () {
 	if(networkView.isMine){
+		changeWeapon("default");
 		Screen.lockCursor = true;
 		if(Network.isClient){
 			p_ = GameObject.Find("player");
@@ -84,6 +85,7 @@ function Start () {
 	
 }
 
+var lasershotcount:int = 0;
 
 function Update () {
 	GameObject.Find("leg1").animation.Play();
@@ -120,26 +122,37 @@ function Update () {
 			    Debug.DrawLine (ray.origin, hit.point);
 			    
 			    
-			    if(weapon == "laser"){
+			    if(weapon == "laser(crap)"){
 				    var lineRenderer : LineRenderer = GameObject.Find("line").GetComponent(LineRenderer);
 				    lineRenderer.useWorldSpace = false;
 				    lineRenderer.SetVertexCount(2);
 	
 				    lineRenderer.SetPosition(1,Vector3(0,0,hit.distance));
+			    }else if(weapon == "laser"){
+			    	if(lasershotcount < 1){
+				    	//var lasershot:GameObject = Instantiate(Resources.Load("lasershot"), transform.position, transform.rotation);
+				    	var lasershot:GameObject = Network.Instantiate(Resources.Load("lasershot"), transform.position, transform.rotation, 0);
+				    	//var lasershot:Rigidbody = Instantiate(Resources.Load("lasershot"), transform.position, transform.rotation);
+				    	//lasershot.velocity = transform.TransformDirection(Vector3(0, 0, 5));
+				    	//lasershot.transform.TransformDirection(Vector3(0, 0, 5));
+				    	lasershotcount = 10;
+			    	}
+			    	
+			    }else if(weapon == "default"){
+			    	var cube:GameObject = Network.Instantiate(Resources.Load("Cube"), hit.point, Quaternion.identity, 0);
+
+				    //var cube : GameObject  = GameObject.CreatePrimitive(PrimitiveType.Cube);
+					//cube.transform.position = hit.point;
+					//cube.transform.localScale = Vector3 (1, 1, 1);
+					//cube.renderer.material.color = Color(Random.value,Random.value,Random.value);
+					cube.renderer.material.color = Color(Random.value,Random.value,Random.value);
+					blocks += 1;
 			    }
-			    
-			    
-			    var cube:GameObject = Network.Instantiate(Resources.Load("Cube"), hit.point, Quaternion.identity, 0);
-			    
-			    
-			    //var cube : GameObject  = GameObject.CreatePrimitive(PrimitiveType.Cube);
-				//cube.transform.position = hit.point;
-				//cube.transform.localScale = Vector3 (1, 1, 1);
-				cube.renderer.material.color = Color(Random.value,Random.value,Random.value);
-				blocks += 1;
+
 			}
 		}
 		
+		lasershotcount -= 1;
 		score_ = p_.transform.position.y;
 	}
 	
@@ -151,8 +164,30 @@ function sendChat(msg){
 	print(msg);
 }
 
+function changeWeapon(wp:String){
+	var arm:GameObject = GameObject.Find("arm");
+	if(wp == "default"){
+		arm.renderer.material.color = Color(0,0,1);
+		weapon = wp;
+	}else if(wp == "laser"){
+		arm.renderer.material.color = Color(0,1,0);
+		weapon = wp;
+	}
+}
 
 
+function OnControllerColliderHit(hit: ControllerColliderHit){
+  if (hit.normal.y < 0.707){
+    if (hit.gameObject.name == "laser")
+    {
+        Destroy(hit.gameObject);
+        changeWeapon("laser");
+    }else if(hit.gameObject.name == "default"){
+    	Destroy(hit.gameObject);
+    	changeWeapon("default");
+    }
+  }
+}
 
 
 
